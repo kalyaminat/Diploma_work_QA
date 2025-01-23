@@ -1,6 +1,5 @@
 import allure
 import re
-
 from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -57,8 +56,8 @@ class MainPage:
             return 0
 
     @allure.step("Фильмы по году выпуска")
-    def find_by_year(self):
-        return self.search_items_by_phrase(self)
+    def find_by_year(self, phrase):
+        return self.search_items_by_phrase(self, phrase)
 
     @allure.step("Фильмы по стране")
     def find_by_country(self, country_name: str):
