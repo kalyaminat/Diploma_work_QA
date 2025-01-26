@@ -33,9 +33,14 @@ class MainPage:
 
     @allure.step("Поиск контента по фразе: {phrase}, поисковая строка")
     def search_items_by_phrase(self, phrase):
-        self.driver._wait_for_elements(By.CSS_SELECTOR, "input[name=kp_query]").send_keys(phrase)
+        self._wait_for_elements(By.CSS_SELECTOR, "input[name=kp_query]").send_keys(phrase)
         self.driver.find_element(By.CSS_SELECTOR, "button[type=submit]").click()
 
+    @allure.step("Возврат текста по фразе")
+    def return_phrase_name(self):
+        return self.driver.find_element(By.CLASS_NAME, "search_results_topText").text
+
+    @allure.step("Поиск контента по селектору")
     def _get_element_texts(self, css_selector):
         elements = self._wait_for_elements(By.CSS_SELECTOR, css_selector, multiple=True)
         return [element.text for element in elements]
@@ -56,10 +61,14 @@ class MainPage:
             return 0
 
     @allure.step("Фильмы по году выпуска")
-    def find_by_year(self, phrase):
-        return self.search_items_by_phrase(self, phrase)
+    def find_by_year(self, phrase: str):
+        return self.search_items_by_phrase(phrase)
 
     @allure.step("Фильмы по стране")
     def find_by_country(self, country_name: str):
-        return self.search_items_by_phrase(By.ID, "country", country_name)
+        return self.search_items_by_phrase(country_name)
+
+    @allure.step("Фильмы по жанру")
+    def find_film_by_genre(self, genre_name: str):
+        return self.search_items_by_phrase(genre_name)
 

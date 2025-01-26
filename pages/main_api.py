@@ -11,36 +11,32 @@ class KinoAPI:
         self.url = url_api
         self.headers = HEADERS
 
-    def get_movie_by_id(self, id: int) -> dict:
-        resp = requests.get(self.url + 'movie/{id}', headers=HEADERS)
+    @allure.step("Поиск фильма по id")
+    def get_movie_by_id(self, id: int):
+        resp = requests.get(self.url + f'movie/{id}', headers=HEADERS)
         return resp.json()
 
     @allure.step("Поиск фильмов 2023 года в жанре детективы с рейтингом больше 6")
-    def get_movie_by_filters(self, payload:str) -> dict:
-        payload = "movie?year=year&genres.name=genres.name&rating.imdb=6-10"
-        resp = requests.get(self.url+payload, headers =HEADERS)
+    def get_movie_by_filters(self, params:str):
+        resp = requests.get(self.url+params, headers =HEADERS)
         return resp.json()
 
     @allure.step("Информация о Жане Рено")
-    def get_movie_by_actor(self, params: str) -> dict:
-        params = "person?id=person.id"
+    def get_movie_by_actor(self, params: str):
         resp = requests.get(self.url+params, headers =HEADERS)
         return resp.json()
 
     @allure.step("Фильмы Жана Рено")
-    def get_movies_of_actor(self, params: str) -> dict:
-        params = "movie?page+10&limit=200&persons.id=persons.id"
+    def get_movies_of_actor(self, params: str):
         resp = requests.get(self.url + params, headers=HEADERS)
         return resp.json()
 
     @allure.step("Номинации Жана Рено")
-    def get_nominations_of_actor(self, params: str) -> dict:
-        params = "person/awards?id=id&selectFields=nomination"
+    def get_nominations_of_actor(self, params: str):
         resp = requests.get(self.url + params, headers=HEADERS)
         return resp.json()
 
     @allure.step("Негат.- в сериале 100000 серий")
-    def get_season_quality(self, params: str) -> dict:
-        params = "season?selectFields=number&number=100000"
+    def get_season_quality(self, params: str):
         resp = requests.get(self.url + params, headers=HEADERS)
         return resp.json()
