@@ -13,9 +13,7 @@ def driver():
     # chrome_options.add_argument("--headless")
 
     driver = webdriver.Chrome()
-    driver.implicitly_wait(100)
     driver.maximize_window()
-
     yield driver
     driver.quit()
 
@@ -34,7 +32,7 @@ def main_page(driver):
 def test_check_main_page_title(main_page):
     with allure.step("Заголовок главной страницы"):
         main_page.check_main_page_title()
-        assert "Вы не робот?" in main_page.check_main_page_title()
+        assert "Кинопоиск" in main_page.check_main_page_title()
 
 @allure.feature("Поиск")
 @allure.story("UI")
@@ -49,7 +47,7 @@ def test_search_movies_by_title(main_page):
 
 @allure.feature("Поиск")
 @allure.story("UI")
-@allure.title("Поиск фильмов по году выпуска")
+@allure.title('Количество результатов поиска по запросу «2024»')
 def test_find_by_year(main_page):
     with allure.step("Поиск фильмов по году 2024"):
         main_page.find_by_year(2024)
@@ -67,7 +65,7 @@ def test_find_by_country(main_page):
 
 @allure.feature("Поиск")
 @allure.story("UI")
-@allure.title("Поиск фильмов по жанру")
+@allure.title('Количество результатов поиска по запросу «Детектив»')
 def test_find_film_by_genre(main_page):
     with allure.step("Поиск фильма по жанру детектив"):
         main_page.find_film_by_genre("Детектив")
